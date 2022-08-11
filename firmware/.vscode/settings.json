@@ -45,5 +45,6 @@
         "regex": "cpp",
         "utility": "cpp",
         "typeinfo": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": false
 }

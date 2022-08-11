@@ -11,6 +11,9 @@
 #include "IntentProcessor.h"
 #include "Speaker.h"
 #include "IndicatorLight.h"
+//#include <GyverOLED.h>
+
+//GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled;
 
 // i2s config for using the internal ADC
 i2s_config_t adcI2SConfig = {
@@ -76,6 +79,7 @@ void setup()
   Serial.begin(115200);
   delay(1000);
   Serial.println("Starting up");
+  //oled.init();
   // start up wifi
   // launch WiFi
   WiFi.mode(WIFI_STA);

@@ -1,17 +1,22 @@
 #include "WitAiChunkedUploader.h"
-#include "WiFiClientSecure.h"
+//#include "WiFiClientSecure.h"
+#include <WiFi.h>
 #include <ArduinoJson.h>
 
 WitAiChunkedUploader::WitAiChunkedUploader(const char *access_key)
 {
-    m_wifi_client = new WiFiClientSecure();
-    m_wifi_client->setInsecure();
-    m_wifi_client->connect("api.wit.ai", 443);
-    char authorization_header[100];
-    snprintf(authorization_header, 100, "authorization: Bearer %s", access_key);
-    m_wifi_client->println("POST /speech?v=20200927 HTTP/1.1");
-    m_wifi_client->println("host: api.wit.ai");
-    m_wifi_client->println(authorization_header);
+    m_wifi_client = new WiFiClient();
+    //m_wifi_client = new WiFiClientSecure();
+    //m_wifi_client->setInsecure();
+    //m_wifi_client->connect("api.wit.ai", 443);
+    m_wifi_client->connect("192.168.0.185", 5003);
+    //char authorization_header[100];
+    //snprintf(authorization_header, 100, "authorization: Bearer %s", access_key);
+    //m_wifi_client->println("POST /speech?v=20200927 HTTP/1.1");
+    m_wifi_client->println("POST /esp32 HTTP/1.1");
+    //m_wifi_client->println("host: api.wit.ai");
+    //m_wifi_client->println("host: 192.168.0.185");
+    //m_wifi_client->println(authorization_header);
     m_wifi_client->println("content-type: audio/raw; encoding=signed-integer; bits=16; rate=16000; endian=little");
     m_wifi_client->println("transfer-encoding: chunked");
     m_wifi_client->println();
@@ -42,34 +47,55 @@ Intent WitAiChunkedUploader::getResults()
     // finish the chunked request by sending a zero length chunk
     m_wifi_client->print("0\r\n");
     m_wifi_client->print("\r\n");
+    //Serial.println(m_wifi_client->readString());
     // get the headers and the content length
     int status = -1;
     int content_length = 0;
-    while (m_wifi_client->connected())
+    // while (m_wifi_client->connected())
+    // {
+    //     char buffer[255];
+    //     //int read = m_wifi_client->readBytesUntil('\n', buffer, 255);
+    //     m_wifi_client->readStringUntil('\n').toCharArray(buffer, 255);
+    //     int read = 1;
+    //     if (read > 0)
+    //     {
+    //         Serial.println(buffer);
+    //         Serial.println("---------------");
+    //         //Serial.println(strstr(buffer, "Content-Length:"));
+    //         //buffer[read] = '\0';
+    //         // blank line indicates the end of the headers
+    //         if (buffer[0] == '\r')
+    //         {
+    //             break;
+    //         }
+    //         if (strncmp("HTTP", buffer, 4) == 0)
+    //         {
+    //             sscanf(buffer, "HTTP/1.0 %d OK", &status);
+    //         }
+    //         else if (strncmp("Content-Length:", buffer, 15) == 0)
+    //         {
+    //             sscanf(buffer, "Content-Length: %d", &content_length);
+    //         }
+    //     }
+        
+
+    // }
+
+    char buffer[1000];
+    while (!m_wifi_client->available())
     {
-        char buffer[255];
-        int read = m_wifi_client->readBytesUntil('\n', buffer, 255);
-        if (read > 0)
-        {
-            buffer[read] = '\0';
-            // blank line indicates the end of the headers
-            if (buffer[0] == '\r')
-            {
-                break;
-            }
-            if (strncmp("HTTP", buffer, 4) == 0)
-            {
-                sscanf(buffer, "HTTP/1.1 %d", &status);
-            }
-            else if (strncmp("Content-Length:", buffer, 15) == 0)
-            {
-                sscanf(buffer, "Content-Length: %d", &content_length);
-            }
-        }
+        vTaskDelay(10);                         //waiting for response from server, giving control freertos in this time
     }
+    m_wifi_client->readString().toCharArray(buffer, 1000);
+    Serial.println(buffer);
+    sscanf(buffer, "HTTP/1.0 %d OK", &status);
+    //Serial.println(strstr(buffer, "Content-Length:"));
+    sscanf(strstr(buffer, "Content-Length:"), "Content-Length: %d", &content_length);
+
     Serial.printf("Http status is %d with content length of %d\n", status, content_length);
     if (status == 200)
     {
+        //Serial.println(strstr(buffer, "{"));
         StaticJsonDocument<500> filter;
         filter["entities"]["device:device"][0]["value"] = true;
         filter["entities"]["device:device"][0]["confidence"] = true;
@@ -79,8 +105,9 @@ Intent WitAiChunkedUploader::getResults()
         filter["traits"]["wit$on_off"][0]["value"] = true;
         filter["traits"]["wit$on_off"][0]["confidence"] = true;
         StaticJsonDocument<500> doc;
-        deserializeJson(doc, *m_wifi_client, DeserializationOption::Filter(filter));
-
+        deserializeJson(doc, strstr(buffer, "{"), DeserializationOption::Filter(filter));
+        // serializeJsonPretty(doc, Serial);
+        // Serial.println();
         const char *text = doc["text"];
         const char *intent_name = doc["intents"][0]["name"];
         float intent_confidence = doc["intents"][0]["confidence"];

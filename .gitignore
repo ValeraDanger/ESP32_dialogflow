@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+/server/gcloud_app_cred.json
+
 # C extensions
 *.so
 

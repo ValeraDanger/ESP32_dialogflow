@@ -5,6 +5,7 @@
 #include "IndicatorLight.h"
 #include "Speaker.h"
 #include "IntentProcessor.h"
+#include <GyverOLED.h>
 
 Application::Application(I2SSampler *sample_provider, IntentProcessor *intent_processor, Speaker *speaker, IndicatorLight *indicator_light)
 {

@@ -2,6 +2,25 @@
 #include "IntentProcessor.h"
 #include "Speaker.h"
 
+
+// TaskHandle_t DisplayTask_handler = NULL;
+// void DisplayTask(void *parametrs) {
+
+//   m_oled.clear();  // очистить дисплей (или буфер)
+//   oled.update();
+
+//   oled.home();                  // курсор в 0,0
+//   oled.print("Кнопка нажата");  // печатай что угодно: числа, строки, float, как Serial!
+//   oled.update();
+//   vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+//   oled.clear();  // очистить дисплей (или буфер)
+//   oled.update();
+
+//   DisplayTask_handler = NULL;
+//   vTaskDelete(NULL);
+// }
+
 IntentProcessor::IntentProcessor(Speaker *speaker)
 {
     m_speaker = speaker;
@@ -78,6 +97,19 @@ IntentResult IntentProcessor::processIntent(const Intent &intent)
         return FAILED;
     }
     Serial.printf("I heard \"%s\"\n", intent.text.c_str());
+    // if (DisplayTask_handler != NULL) {
+    //     vTaskDelete(DisplayTask_handler);
+    //   }
+
+    //   xTaskCreate(
+    //     DisplayTask,          //func
+    //     "Print display",      //descript
+    //     1000,                 //buff size
+    //     NULL,                 //params
+    //     1,                    //priority
+    //     &DisplayTask_handler  //handle
+    //   );
+    
     if (intent.intent_name.empty())
     {
         Serial.println("Can't work out what you want to do with the device...");
