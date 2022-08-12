@@ -4,11 +4,32 @@
 #include "NeuralNetwork.h"
 #include "RingBuffer.h"
 #include "DetectWakeWordState.h"
+#include <GyverOLED.h>
+
+GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled1;
 
 #define WINDOW_SIZE 320
 #define STEP_SIZE 160
 #define POOLING_SIZE 6
 #define AUDIO_LENGTH 16000
+
+TaskHandle_t DisplayWakeWordTask_handler = NULL;
+void DisplayWakeWordTask(void *parametrs) {
+    oled1.clear();  // очистить дисплей (или буфер)
+    oled1.update();
+
+    oled1.home();                  // курсор в 0,0
+    oled1.autoPrintln(true);  // печатай что угодно: числа, строки, float, как Serial!
+    oled1.print("Я слушаю.");
+    oled1.update();
+    vTaskDelay(3000 / portTICK_PERIOD_MS);
+
+    oled1.clear();  // очистить дисплей (или буфер)
+    oled1.update();
+
+    DisplayWakeWordTask_handler = NULL;
+    vTaskDelete(NULL);
+}
 
 DetectWakeWordState::DetectWakeWordState(I2SSampler *sample_provider)
 {
@@ -63,7 +84,19 @@ bool DetectWakeWordState::run()
         {
             m_number_of_detections = 0;
             // detected the wake word in several runs, move to the next state
-            Serial.printf("P(%.2f): Вечер в хату\n", output);
+            Serial.printf("P(%.2f): Я слушаю\n", output);
+            if (DisplayWakeWordTask_handler != NULL) {
+                vTaskDelete(DisplayWakeWordTask_handler);
+            }
+
+            xTaskCreate(
+                DisplayWakeWordTask,          //func
+                "Print wake word heard",      //descript
+                10000,                 //buff size
+                NULL,                 //params
+                1,                    //priority
+                &DisplayWakeWordTask_handler //handle
+            );
             return true;
         }
     }

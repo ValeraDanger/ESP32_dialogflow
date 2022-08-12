@@ -13,7 +13,7 @@
 #include "IndicatorLight.h"
 //#include <GyverOLED.h>
 
-//GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled;
+
 
 // i2s config for using the internal ADC
 i2s_config_t adcI2SConfig = {
@@ -70,6 +70,7 @@ void applicationTask(void *param)
     if (ulNotificationValue > 0)
     {
       application->run();
+      
     }
   }
 }
@@ -79,7 +80,7 @@ void setup()
   Serial.begin(115200);
   delay(1000);
   Serial.println("Starting up");
-  //oled.init();
+  
   // start up wifi
   // launch WiFi
   WiFi.mode(WIFI_STA);
@@ -120,6 +121,8 @@ void setup()
   intent_processor->addDevice("kitchen", GPIO_NUM_5);
   intent_processor->addDevice("bedroom", GPIO_NUM_21);
   intent_processor->addDevice("table", GPIO_NUM_23);
+
+
 
   // create our application
   Application *application = new Application(i2s_sampler, intent_processor, speaker, indicator_light);

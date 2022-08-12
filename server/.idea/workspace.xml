@@ -2,27 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0b62565-e5db-4a72-8178-2c9d790f1522" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/server.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dflow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/esp32.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.raw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firmware/.vscode/extensions.json" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/.vscode/extensions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firmware/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firmware/lib/wit_ai/WitAiChunkedUploader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/lib/wit_ai/WitAiChunkedUploader.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firmware/lib/wit_ai/WitAiChunkedUploader.h" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/lib/wit_ai/WitAiChunkedUploader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firmware/platformio.ini" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/platformio.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firmware/src/Application.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/src/Application.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../firmware/src/IntentProcessor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/src/IntentProcessor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firmware/src/config.h" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/src/config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firmware/src/IntentProcessor.h" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/src/IntentProcessor.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../firmware/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firmware/src/state_machine/DetectWakeWordState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../firmware/src/state_machine/DetectWakeWordState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/esp32.wav" beforeDir="false" afterPath="$PROJECT_DIR$/esp32.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.raw" beforeDir="false" afterPath="$PROJECT_DIR$/test.raw" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,21 +75,21 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="664" y="113" key="#server/0.0.1920.1040@0.0.1920.1040" timestamp="1660244830099" />
-    <state width="1899" height="275" key="GridCell.Tab.0.bottom" timestamp="1660244813292">
+    <state width="1899" height="275" key="GridCell.Tab.0.bottom" timestamp="1660250499776">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="275" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1660244813292" />
-    <state width="1899" height="275" key="GridCell.Tab.0.center" timestamp="1660244813292">
+    <state width="1899" height="275" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1660250499776" />
+    <state width="1899" height="275" key="GridCell.Tab.0.center" timestamp="1660250499776">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="275" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1660244813292" />
-    <state width="1899" height="275" key="GridCell.Tab.0.left" timestamp="1660244813292">
+    <state width="1899" height="275" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1660250499776" />
+    <state width="1899" height="275" key="GridCell.Tab.0.left" timestamp="1660250499776">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="275" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1660244813292" />
-    <state width="1899" height="275" key="GridCell.Tab.0.right" timestamp="1660244813292">
+    <state width="1899" height="275" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1660250499776" />
+    <state width="1899" height="275" key="GridCell.Tab.0.right" timestamp="1660250499776">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="275" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1660244813292" />
+    <state width="1899" height="275" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1660250499776" />
   </component>
 </project>

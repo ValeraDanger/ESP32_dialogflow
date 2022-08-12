@@ -1,30 +1,41 @@
 #include <Arduino.h>
 #include "IntentProcessor.h"
 #include "Speaker.h"
+#include <GyverOLED.h>
 
 
-// TaskHandle_t DisplayTask_handler = NULL;
-// void DisplayTask(void *parametrs) {
+GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled;
 
-//   m_oled.clear();  // очистить дисплей (или буфер)
-//   oled.update();
 
-//   oled.home();                  // курсор в 0,0
-//   oled.print("Кнопка нажата");  // печатай что угодно: числа, строки, float, как Serial!
-//   oled.update();
-//   vTaskDelay(2000 / portTICK_PERIOD_MS);
+TaskHandle_t DisplayTask_handler = NULL;
+void DisplayTask(void *parametrs) {
+    String printStr;
+    printStr = String((char*) parametrs);
 
-//   oled.clear();  // очистить дисплей (или буфер)
-//   oled.update();
+    oled.clear();  // очистить дисплей (или буфер)
+    oled.update();
 
-//   DisplayTask_handler = NULL;
-//   vTaskDelete(NULL);
-// }
+    oled.home();                  // курсор в 0,0
+    oled.autoPrintln(true);  // печатай что угодно: числа, строки, float, как Serial!
+    oled.print(printStr);
+    oled.update();
+    vTaskDelay(5000 / portTICK_PERIOD_MS);
+
+    oled.clear();  // очистить дисплей (или буфер)
+    oled.update();
+
+    DisplayTask_handler = NULL;
+    vTaskDelete(NULL);
+}
 
 IntentProcessor::IntentProcessor(Speaker *speaker)
 {
     m_speaker = speaker;
+    oled.init();  
+    oled.clear();  // очистить дисплей (или буфер)
+    oled.update();
 }
+
 
 IntentResult IntentProcessor::turnOnDevice(const Intent &intent)
 {
@@ -97,18 +108,19 @@ IntentResult IntentProcessor::processIntent(const Intent &intent)
         return FAILED;
     }
     Serial.printf("I heard \"%s\"\n", intent.text.c_str());
-    // if (DisplayTask_handler != NULL) {
-    //     vTaskDelete(DisplayTask_handler);
-    //   }
 
-    //   xTaskCreate(
-    //     DisplayTask,          //func
-    //     "Print display",      //descript
-    //     1000,                 //buff size
-    //     NULL,                 //params
-    //     1,                    //priority
-    //     &DisplayTask_handler  //handle
-    //   );
+    if (DisplayTask_handler != NULL) {
+        vTaskDelete(DisplayTask_handler);
+      }
+
+      xTaskCreate(
+        DisplayTask,          //func
+        "Print display",      //descript
+        10000,                 //buff size
+        (void*) intent.text.c_str(),                 //params
+        1,                    //priority
+        &DisplayTask_handler  //handle
+      );
     
     if (intent.intent_name.empty())
     {
