@@ -4,7 +4,7 @@
 #include <GyverOLED.h>
 
 
-GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled;
+extern GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled;
 
 
 TaskHandle_t DisplayTask_handler = NULL;
@@ -31,9 +31,9 @@ void DisplayTask(void *parametrs) {
 IntentProcessor::IntentProcessor(Speaker *speaker)
 {
     m_speaker = speaker;
-    oled.init();  
-    oled.clear();  // очистить дисплей (или буфер)
-    oled.update();
+
+    //oled.clear();  // очистить дисплей (или буфер)
+    //oled.update();
 }
 
 

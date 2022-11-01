@@ -11,8 +11,9 @@
 #include "IntentProcessor.h"
 #include "Speaker.h"
 #include "IndicatorLight.h"
-//#include <GyverOLED.h>
+#include <GyverOLED.h>
 
+GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled;
 
 
 // i2s config for using the internal ADC
@@ -77,6 +78,10 @@ void applicationTask(void *param)
 
 void setup()
 {
+  oled.init();  
+  oled.clear();  // очистить дисплей (или буфер)
+  oled.update();
+
   Serial.begin(115200);
   delay(1000);
   Serial.println("Starting up");
